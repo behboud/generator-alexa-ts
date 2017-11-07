@@ -1,0 +1,24 @@
+service: <%= name %>
+
+package:
+  individually: true
+
+plugins:
+  - serverless-webpack
+  - serverless-bespoken
+  - serverless-offline
+  
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  stage: dev
+  memorySize: 128
+  versionFunctions: false
+  region: eu-west-1
+
+functions:
+  skill:
+    handler: src/index.handler
+    events:
+      - alexaSkill

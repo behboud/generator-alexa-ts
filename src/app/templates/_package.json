@@ -1,0 +1,32 @@
+{
+  "name": "<%= fileName %>",
+  "version": "0.0.0",
+  "description": "An Alexa skill for the Amazon Echo.",
+  "main": "src/index.ts",
+  "license": "MIT",
+  "scripts": {
+    "debug":
+      "node --inspect --debug $(which sls) offline start --dontPrintOutput -t -l .webpack/service/src",
+    "arn":
+      "aws lambda list-functions | jq '.Functions[] | select(.FunctionName | contains(\"<%= fileName %>\")).FunctionArn'"
+  },
+  "dependencies": {
+    "alexa-sdk": "^1.0.15"
+  },
+  "devDependencies": {
+    "@types/alexa-sdk": "^1.0.10",
+    "@types/node": "^8.0.46",
+    "@types/webpack": "^3.0.13",
+    "@types/webpack-node-externals": "^1.6.0",
+    "serverless-bespoken": "^1.0.0",
+    "serverless-offline": "^3.16.0",
+    "serverless-webpack": "^3.1.2",
+    "source-map-loader": "^0.2.1",
+    "ts-loader": "^3.0.5",
+    "typescript": "^2.4.2",
+    "webpack": "^3.8.1",
+    "webpack-node-externals": "^1.6.0"
+  },
+  "files": ["src"],
+  "keywords": ["alexa", "alexa-skill", "echo", "skill"]
+}
