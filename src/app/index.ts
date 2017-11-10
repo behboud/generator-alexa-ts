@@ -70,7 +70,7 @@ class AlexaGenerator extends Generator {
     );
 
     // Create in generated 'src' dir
-    this.fs.copy(
+    this.fs.copyTpl(
       this.templatePath("src/index.ts"),
       this.destinationPath("src/index.ts"),
       data
