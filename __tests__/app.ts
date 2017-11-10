@@ -1,6 +1,6 @@
 import { join } from "path";
-import { run } from "yeoman-test";
 import * as assert from "yeoman-assert";
+import { run } from "yeoman-test";
 
 describe("generator-alexa-ts:app", () => {
   beforeAll(() => {
@@ -8,7 +8,7 @@ describe("generator-alexa-ts:app", () => {
       run(join(__dirname, "..", "src", "app"))
         .withOptions({ skipInstall: true })
         .withPrompts({ name: "test" })
-        .on("error", function(error) {
+        .on("error", error => {
           reject(error);
         })
         .on("end", () => resolve())

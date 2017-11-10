@@ -1,123 +1,42 @@
 const Generator = require("yeoman-generator");
 const chalk = require("chalk");
 const yosay = require("yosay");
-import { kebabCase, camelCase, capitalize } from "lodash";
-import { which } from "shelljs";
-import { readJSON } from "fs-extra";
-import { join } from "path";
+import { camelCase, capitalize, kebabCase } from "lodash";
 import { homedir } from "os";
-
-import { createNewSkill } from "./lib";
-
-const CREATE_NEW_PROFILE = {
-  name: "Create a new profile",
-  profile: "",
-  token: "",
-  vendorId: ""
-};
+import { join } from "path";
+import { which } from "shelljs";
 
 class AlexaGenerator extends Generator {
-  prompting() {
+  public prompting() {
     this.log(
       yosay(
         "Welcome to the amazing " + chalk.red("Alexa Skill") + " generator!"
       )
     );
-    return new Promise((resolve, reject) => {
-      return this.prompt([
-        {
-          type: "input",
-          name: "name",
-          message: "Your skill name",
-          default: this.appname
-        },
-        {
-          type: "confirm",
-          name: "createNewSkill",
-          message:
-            "Do you want me to create a new skill on the developer console account?",
-          default: false
-        },
-        {
-          type: "input",
-          name: "skillid",
-          message: "Your skill id",
-          default: "skill-id",
-          when: function(answers) {
-            return !answers.createNewSkill;
-          }
-        }
-      ]).then(answers => {
-        if (answers.createNewSkill) {
-          readJSON(join(homedir(), ".ask", "cli_config"))
-            .then(cliConfig => {
-              const profileChoices = Object.keys(cliConfig.profiles)
-                .map(profile => {
-                  return {
-                    name: `Profile: ${profile}, AWS-Profile: ${cliConfig
-                      .profiles[profile].aws_profile}, VendorId:${cliConfig
-                      .profiles[profile].vendor_id}`,
-                    profile: profile,
-                    token: cliConfig.profiles[profile].token,
-                    vendorId: cliConfig.profiles[profile].vendor_id
-                  };
-                })
-                .concat(CREATE_NEW_PROFILE);
-              return this.prompt([
-                {
-                  type: "list",
-                  name: "profile",
-                  message: "Choose a profile to be used for skill creation",
-                  choices: profileChoices
-                }
-              ])
-                .then(profileChoice => {
-                  if (profileChoice.name === CREATE_NEW_PROFILE) {
-                    //TODO: change to RxJS as this is getting more complex
-                    this.spawnCommandSync("ask", ["init"]);
-                  }
-                  createNewSkill({
-                    token: profileChoice.token.access_token,
-                    vendorId: profileChoice.vendorId,
-                    skillName: answers.name
-                  });
-                })
-                .catch(err => {
-                  console.error(err);
-                });
-            })
-            .catch(err => {
-              // no ask cli run so far
-              if (which("ask")) {
-                this.spawnCommandSync("ask", ["init"]);
-                resolve(answers);
-              } else {
-                if (which("yarn")) {
-                  this.spawnCommandSync("yarn", ["global", "add", "ask-cli"]);
-                } else {
-                  this.spawnCommandSync("npm", ["-g", "install", "ask-cli"]);
-                }
-                this.spawnCommandSync("ask", ["init"]);
-                resolve(answers);
-              }
-            });
-        } else {
-          resolve(answers);
-        }
-      });
-    }).then((answers: any) => {
-      this.log("app name", answers.name);
-      this.log("skill id", answers.skillid);
+    return this.prompt([
+      {
+        default: this.appname,
+        message: "Your skill name",
+        name: "name",
+        type: "input"
+      },
+      {
+        default: "skill-id",
+        message: "Your skill id",
+        name: "skillid",
+        type: "input"
+      }
+    ]).then((answers: any) => {
       this.props = answers;
     });
   }
 
-  writing() {
+  public writing() {
     const data = {
-      name: this.props.name,
-      skillid: this.props.skillid,
+      className: capitalize(camelCase(this.props.name)),
       fileName: kebabCase(this.props.name),
-      className: capitalize(camelCase(this.props.name))
+      name: this.props.name,
+      skillid: this.props.skillid
     };
 
     this.fs.copy(
@@ -190,7 +109,7 @@ class AlexaGenerator extends Generator {
     );
   }
 
-  install() {
+  public install() {
     if (which("yarn")) {
       this.yarnInstall();
     } else {
