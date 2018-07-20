@@ -19,12 +19,6 @@ class AlexaGenerator extends Generator {
         message: "Your skill name",
         name: "name",
         type: "input"
-      },
-      {
-        default: "skill-id",
-        message: "Your skill id",
-        name: "skillid",
-        type: "input"
       }
     ]).then((answers: any) => {
       this.props = answers;
@@ -35,8 +29,7 @@ class AlexaGenerator extends Generator {
     const data = {
       className: capitalize(camelCase(this.props.name)),
       fileName: kebabCase(this.props.name),
-      name: this.props.name,
-      skillid: this.props.skillid
+      name: this.props.name
     };
 
     this.fs.copy(
@@ -86,26 +79,12 @@ class AlexaGenerator extends Generator {
       data
     );
     this.fs.copy(
-      this.templatePath("src/launch.ts"),
-      this.destinationPath("src/launch.ts"),
-      data
-    );
-    this.fs.copyTpl(
-      this.templatePath("src/unhandled.ts"),
-      this.destinationPath("src/unhandled.ts"),
-      data
-    );
-    this.fs.copy(
       this.templatePath(".vscode/launch.json"),
       this.destinationPath(".vscode/launch.json")
     );
     this.fs.copy(
       this.templatePath("src/awesomeIntents.ts"),
       this.destinationPath("src/awesomeIntents.ts")
-    );
-    this.fs.copy(
-      this.templatePath("src/sessionended.ts"),
-      this.destinationPath("src/sessionended.ts")
     );
   }
 

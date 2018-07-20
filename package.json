@@ -1,15 +1,16 @@
 {
   "name": "generator-alexa-ts",
   "version": "0.0.2",
-  "description":
-    "A Yeoman generator for Alexa Skills to run on AWS Lambda using TypeScript",
-  "homepage": "",
+  "description": "A Yeoman generator for Alexa Skills to run on AWS Lambda using TypeScript",
+  "homepage": "https://github.com/behboud",
   "author": {
     "name": "Behboud",
     "email": "b.kalantary@gmail.com",
-    "url": ""
+    "url": "https://github.com/behboud"
   },
-  "files": ["generators"],
+  "files": [
+    "generators"
+  ],
   "main": "generators/index.js",
   "keywords": [
     "alexa",
@@ -22,41 +23,46 @@
     "@types/axios": "^0.14.0",
     "@types/chalk": "^2.2.0",
     "@types/eslint-plugin-prettier": "^2.2.0",
-    "@types/fs-extra": "^4.0.3",
-    "@types/jest": "^21.1.5",
+    "@types/fs-extra": "^5.0.4",
+    "@types/jest": "^23.1.5",
     "@types/lodash": "^4.14.80",
     "@types/prettier": "^1.7.1",
-    "@types/shelljs": "^0.7.5",
+    "@types/shelljs": "^0.8.0",
     "@types/typescript": "^2.0.0",
     "@types/yeoman-generator": "^2.0.0",
     "@types/yeoman-test": "^1.7.2",
     "@types/yosay": "^0.0.29",
-    "eslint": "^4.10.0",
+    "eslint": "^5.1.0",
     "eslint-config-prettier": "^2.7.0",
-    "eslint-config-xo": "^0.19.0",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-config-xo": "^0.23.0",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-node": "^6.0.1",
     "eslint-plugin-prettier": "^2.3.1",
-    "eslint-plugin-typescript": "^0.8.0",
+    "eslint-plugin-promise": "^3.8.0",
+    "eslint-plugin-standard": "^3.1.0",
+    "eslint-plugin-typescript": "^0.12.0",
     "husky": "^0.14.3",
-    "jest": "^21.2.1",
-    "jest-cli": "^21.2.1",
-    "lint-staged": "^4.2.1",
-    "nsp": "^2.6.3",
+    "jest": "^23.3.0",
+    "jest-cli": "^23.3.0",
+    "lint-staged": "^7.2.0",
+    "nsp": "^3.2.1",
     "prettier": "^1.7.0",
-    "ts-jest": "^21.1.4",
+    "ts-jest": "^23.0.0",
     "tslint-config-prettier": "^1.6.0",
     "typescript": "^2.6.1",
-    "typescript-eslint-parser": "^8.0.1",
+    "typescript-eslint-parser": "^16.0.1",
     "yeoman-assert": "^3.1.0",
     "yeoman-test": "^1.7.0"
   },
   "dependencies": {
-    "axios": "^0.17.0",
+    "axios": "^0.18.0",
     "chalk": "^2.1.0",
-    "fs-extra": "^4.0.2",
+    "fs-extra": "^6.0.1",
     "lodash": "^4.17.4",
-    "shelljs": "^0.7.8",
+    "shelljs": "^0.8.2",
     "tslint": "^5.8.0",
-    "yeoman-generator": "^2.0.1",
+    "yeoman-generator": "^3.0.0",
     "yosay": "^2.0.1"
   },
   "jest": {
@@ -69,23 +75,39 @@
       "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
-    "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json"],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json"
+    ],
     "testEnvironment": "node",
-    "testPathIgnorePatterns": ["templates"]
+    "testPathIgnorePatterns": [
+      "templates"
+    ]
   },
   "scripts": {
-    "pretest": "eslint . && node_modules/.bin/tsc",
+    "pretest": "eslint __tests__/**/*.ts && node_modules/.bin/tsc",
     "precommit": "lint-staged",
     "test": "jest",
-    "prepublish":
-      "nsp check && node_modules/.bin/tsc && rsync -r ./src/app/templates ./generators/app"
+    "prepublish": "nsp check && node_modules/.bin/tsc && rsync -r ./src/app/templates ./generators/app"
   },
   "lint-staged": {
-    "*.js": ["eslint --fix", "git add"],
-    "*.json": ["prettier --write", "git add"]
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ],
+    "*.json": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "eslintConfig": {
-    "extends": ["xo", "prettier"],
+    "extends": [
+      "xo",
+      "prettier"
+    ],
     "env": {
       "jest": true,
       "node": true
@@ -100,7 +122,10 @@
       ]
     },
     "parser": "typescript-eslint-parser",
-    "plugins": ["typescript", "prettier"]
+    "plugins": [
+      "typescript",
+      "prettier"
+    ]
   },
   "repository": "behboud/generator-alexa-ts",
   "license": "Apache-2.0"

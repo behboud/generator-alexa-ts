@@ -26,8 +26,6 @@ describe("generator-alexa-ts:app", () => {
       "webpack.config.js",
       "src/index.ts",
       "src/common.ts",
-      "src/unhandled.ts",
-      "src/launch.ts",
       "src/languagestring.ts",
       ".vscode/launch.json",
       "serverless.yml",

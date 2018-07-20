@@ -1,7 +1,9 @@
-service: <%= name %>
+service: someskill
 
-package:
-  individually: true
+custom:
+  webpack:
+    packager: 'yarn'
+    includeModules: true # enable auto-packing of external modules
 
 plugins:
   - serverless-webpack

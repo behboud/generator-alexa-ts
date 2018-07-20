@@ -21,7 +21,17 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.json']
   },
+  mode: 'production',
   module: {
-    loaders: [{ test: /\.ts(x?)$/, loader: 'ts-loader' }]
+    rules: [
+      {
+        test: /\.ts(x?)$/,
+        use: [
+          {
+            loader: 'ts-loader'
+          }
+        ],
+      }
+    ]
   }
 }

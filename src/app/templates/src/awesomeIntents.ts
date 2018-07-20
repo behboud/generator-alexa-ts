@@ -1,16 +1,15 @@
-export function RedirectToThisIntent() {
-  switch (this.event.request.dialogState) {
-    case 'STARTED':
-      console.log('dialog just started')
-      this.emit(':delegate')
-      break
-    case 'COMPLETED':
-      console.log('dialog completed')
-      this.emit('Unhandled')
-      break
-    default:
-      console.log('need more')
-      this.emit(':delegate')
-      break
-  }
+export const HelloWorldIntentHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'HelloWorldIntent'
+  },
+  handle(handlerInput) {
+    const requestAttributes = handlerInput.attributesManager.getRequestAttributes()
+    const speechText = requestAttributes.t('HELLO_WORLD')
+
+    return handlerInput.responseBuilder
+      .speak(speechText)
+      .withSimpleCard(speechText, speechText)
+      .getResponse()
+  },
 }

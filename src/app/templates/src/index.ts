@@ -1,23 +1,23 @@
-import { handler as alexaHandle } from 'alexa-sdk'
-import AMAZON from './common'
-import languageStrings from './languagestring'
-import LaunchRequest from './launch'
-import Unhandled from './unhandled'
-import SessionEndedRequest from './sessionended'
-import * as awesomeIntents from './awesomeIntents'
+import { SkillBuilders } from 'ask-sdk'
+import {
+  CancelAndStopIntentHandler,
+  DefaultErrorHandler,
+  HelpIntentHandler,
+  SessionEndedRequestHandler,
+  LaunchRequestHandler
+} from './common'
+import { LocalizationInterceptor } from './languagestring'
+import { HelloWorldIntentHandler } from './awesomeIntents'
 
-const handlers = {
-  LaunchRequest,
-  Unhandled,
-  SessionEndedRequest,
-  ...AMAZON,
-  ...awesomeIntents
-}
-
-export const handler = (event: any, context: any, callback: any) => {
-  const alexa = alexaHandle(event, context, callback)
-  alexa.appId = '<%= skillid %>'
-  alexa.resources = languageStrings
-  alexa.registerHandlers(handlers)
-  alexa.execute()
-}
+export const handler = SkillBuilders.custom()
+  .addRequestHandlers(
+    LaunchRequestHandler,
+    SessionEndedRequestHandler,
+    CancelAndStopIntentHandler,
+    HelpIntentHandler,
+    SessionEndedRequestHandler,
+    HelloWorldIntentHandler
+  )
+  .addRequestInterceptors(LocalizationInterceptor)
+  .addErrorHandlers(DefaultErrorHandler)
+  .lambda()

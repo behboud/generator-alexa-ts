@@ -1,5 +1,5 @@
 {
-  "name": "<%= fileName %>",
+  "name": "someskill",
   "version": "0.0.0",
   "description": "An Alexa skill for the Amazon Echo.",
   "main": "src/index.ts",
@@ -8,23 +8,26 @@
     "debug":
       "node --inspect --debug $(which sls) offline start --dontPrintOutput -t -l .webpack/service/src",
     "arn":
-      "aws lambda list-functions | jq '.Functions[] | select(.FunctionName | contains(\"<%= fileName %>\")).FunctionArn'"
+      "aws lambda list-functions | jq '.Functions[] | select(.FunctionName | contains(\"someskill\")).FunctionArn'"
   },
   "dependencies": {
-    "alexa-sdk": "^1.0.15"
+    "@types/i18next": "^8.4.4",
+    "@types/i18next-sprintf-postprocessor": "^0.0.29",
+    "ask-sdk": "^2.0.7",
+    "i18next": "^11.3.6",
+    "i18next-sprintf-postprocessor": "^0.2.2"
   },
   "devDependencies": {
-    "@types/alexa-sdk": "^1.0.10",
-    "@types/node": "^8.0.46",
-    "@types/webpack": "^3.0.13",
+    "@types/node": "^10.5.2",
+    "@types/webpack": "^4.4.5",
     "@types/webpack-node-externals": "^1.6.0",
     "serverless-bespoken": "^1.0.0",
     "serverless-offline": "^3.16.0",
-    "serverless-webpack": "^3.1.2",
+    "serverless-webpack": "^5.2.0",
     "source-map-loader": "^0.2.1",
-    "ts-loader": "^3.0.5",
+    "ts-loader": "^4.4.2",
     "typescript": "^2.4.2",
-    "webpack": "^3.8.1",
+    "webpack": "^4.15.1",
     "webpack-node-externals": "^1.6.0"
   },
   "files": ["src"],

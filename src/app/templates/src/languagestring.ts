@@ -1,31 +1,38 @@
-// Series of strings for language tokenization
-export default {
-  'en-US': {
+import { use } from "i18next";
+import * as sprintf from "i18next-sprintf-postprocessor";
+
+const languageStrings = {
+  en: {
     translation: {
-      launchRequestResponse:
-        'Launch Request for dialog mode, the session will remain open until you say, stop',
-      exit: 'Goodbye.',
-      received_with: ' received with ',
-      slot: ' slot. ',
-      slots: ' slots. ',
-      still_listening:
-        "I'm still listening,  Please try another intent or say, stop",
-      received_slots_are: 'Received slots are ',
-      card_title: 'Reflected Intent'
+      SAY_HI: 'You can say hi to me',
+      HELLO_WORLD: 'Hello World!',
+      BYE: 'Goodbye!',
+      SORRY: 'Sorry, I can\'t understand the command. Please say again.',
+      LAUNCH: 'Welcome to the Alexa Skills Kit, you can say hello!'
     }
   },
-  'de-DE': {
+  de: {
     translation: {
-      launchRequestResponse:
-        'Launch Request. Gib den nächsten Befehl oder sage Abbruch',
-      exit: 'Auf Wiedersehen.',
-      received_with: ' empfangen mit ',
-      slot: ' Slot. ',
-      slots: ' Slots. ',
-      still_listening:
-        'Ich lausche noch immer. Bitte gebe einen neuen Befehl oder sage Stop.',
-      received_slots_are: 'Empfangene Slots sind ',
-      card_title: 'Reflektierte Absicht'
+      SAY_HI: 'Du kannst mir hallo sagen',
+      HELLO_WORLD: 'Hallo Welt!',
+      BYE: 'Auf Wiedersehen!',
+      SORRY: 'Es tut mir leid. Ich habe das leider nicht verstanden. Versuche es noch einmal.',
+      LAUNCH: 'Willkommen zum Alexa Skills Kit. Du kannst hallo sagen!'
+    }
+  }
+}
+
+export const LocalizationInterceptor = {
+  process(handlerInput) {
+    const localizationClient = use(sprintf).init({
+      lng: handlerInput.requestEnvelope.request.locale,
+      overloadTranslationOptionHandler: sprintf.overloadTranslationOptionHandler,
+      resources: languageStrings,
+      returnObjects: true
+    })
+    const attributes = handlerInput.attributesManager.getRequestAttributes()
+    attributes.t = (...args) => {
+      return localizationClient.t.call(localizationClient, ...args)
     }
   }
 }
