@@ -29,3 +29,4 @@ functions:
     handler: src/index.handler
     events:
       - alexaSkill
+        appId: amzn1.ask.skill.xx-xx-xx-xx
