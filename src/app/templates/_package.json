@@ -1,5 +1,5 @@
 {
-  "name": "someskill",
+  "name": "<%= fileName %>",
   "version": "0.0.0",
   "description": "An Alexa skill for the Amazon Echo.",
   "main": "src/index.ts",
@@ -8,7 +8,7 @@
     "debug":
       "node --inspect --debug $(which sls) offline start --dontPrintOutput -t -l .webpack/service/src",
     "arn":
-      "aws lambda list-functions | jq '.Functions[] | select(.FunctionName | contains(\"someskill\")).FunctionArn'"
+      "aws lambda list-functions | jq '.Functions[] | select(.FunctionName | contains(\"<%= fileName %>\")).FunctionArn'"
   },
   "dependencies": {
     "@types/i18next": "^8.4.4",

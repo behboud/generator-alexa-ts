@@ -1,9 +1,14 @@
-service: someskill
+service: <%= fileName %>
 
 custom:
   webpack:
     packager: 'yarn'
     includeModules: true # enable auto-packing of external modules
+    forceExclude:
+      - aws-sdk
+
+package:
+  individually: true
 
 plugins:
   - serverless-webpack
