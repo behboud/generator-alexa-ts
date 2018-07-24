@@ -14,9 +14,7 @@ module.exports = {
   devtool: 'source-map',
   target: 'node',
   externals: [
-    nodeExternals({
-      whitelist: ['alexa-sdk', 'i18next', 'i18next-sprintf-postprocessor']
-    })
+    nodeExternals()
   ],
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.json']
